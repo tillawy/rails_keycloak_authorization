@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  mount RailsKeycloakAuthorization::Engine => "/rails_keycloak_authorization"
+  resources :organizations
+  root "main#index"
+  mount RailsKeycloakAuthorization::Engine => "/rka"
 end

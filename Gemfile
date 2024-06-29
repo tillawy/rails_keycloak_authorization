@@ -8,6 +8,8 @@ gem "puma"
 
 gem "sqlite3", "~> 1.7.3"
 
+gem "omniauth-keycloak"
+
 gem "sprockets-rails"
 
 #gem "keycloak-admin", ">= 1.1.2
