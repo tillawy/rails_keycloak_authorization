@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_28_073115) do
-  create_table "organizations", force: :cascade do |t|
-    t.text "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema[7.1].define(version: 2024_06_30_060422) do
+# Could not dump table "organizations" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+# Could not dump table "users" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
 
 end
