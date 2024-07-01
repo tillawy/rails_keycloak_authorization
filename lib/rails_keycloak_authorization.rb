@@ -13,26 +13,29 @@ module RailsKeycloakAuthorization
       @app = app
     end
     def call(env)
-      @app.call(env) unless should_process?(env["REQUEST_URI"])
-
-      authorize!(env['REQUEST_URI'], env['REQUEST_METHOD'], env['HTTP_AUTHORIZATION'])
-
-      [200, {}, ["Hello Middleware, Rails::Keycloak::Authorization!"]]
+      if should_process?(env["REQUEST_URI"], env["HTTP_AUTHORIZATION"])
+        if authorize!(env['REQUEST_URI'], env['REQUEST_METHOD'], env['HTTP_AUTHORIZATION'])
+          @app.call(env)
+        else
+          [403, {}, ["Authorization Failed"]]
+        end
+      else
+        @app.call(env)
+      end
     end
 
-    def should_process?(request_uri)
-      RailsKeycloakAuthorization.match_patterns.detect{|r| r.match(request_uri)}
+    def should_process?(request_uri, http_authorization)
+      http_authorization && RailsKeycloakAuthorization.match_patterns.detect{|r| r.match(request_uri)}
     end
 
-    def authorize!(request_uri, request_method, authorization)
+    def authorize!(request_uri, request_method, http_authorization)
       uri = URI("#{RailsKeycloakAuthorization.keycloak_server_url}/realms/#{RailsKeycloakAuthorization.keycloak_realm}/protocol/openid-connect/token")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = Rails.env.production?
-      request = Net::HTTP::Post.new(
-        uri,
-        initheader = {
+      http.read_timeout = 3
+      request = Net::HTTP::Post.new(uri, {
           'Content-Type' => 'application/x-www-form-urlencoded',
-          'Authorization' => authorization,
+          'Authorization' => http_authorization,
         }
       )
       request.body = URI.encode_www_form( {
@@ -44,8 +47,7 @@ module RailsKeycloakAuthorization
                                             permission_resource_matching_uri: true
                                           })
       res = http.request(request)
-      puts "Response #{res.code} #{res.message}: #{res.body}"
-      raise "Authorization failed" unless res.is_a?(Net::HTTPSuccess)
+      res.is_a?(Net::HTTPSuccess)
     end
   end
 end
