@@ -9,8 +9,8 @@
   "include": [],
   "env": {
     "KEYCLOAK_SERVER_URL":              "http://localhost:8080",
-    "KEYCLOAK_SERVER_DOMAIN":           "localhost",
     "KEYCLOAK_ADMIN_CLIENT_ID":         "keycloak-admin",
+    "KEYCLOAK_ADMIN_SERVER_URL":        "http://localhost:8080",
     "KEYCLOAK_ADMIN_CLIENT_SECRET":     "keycloak-admin-client-secret-xxx",
     "KEYCLOAK_ADMIN_REALM_NAME":        "master",
     "KEYCLOAK_ADMIN_USER":              "admin",
