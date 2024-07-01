@@ -162,9 +162,9 @@
         }
       }
     },
-    "sqlite@latest": {
-      "last_modified": "2024-06-25T03:12:51Z",
-      "resolved": "github:NixOS/nixpkgs/cfb89a95f19bea461fc37228dc4d07b22fe617c2#sqlite",
+    "sqlite@3.45.3": {
+      "last_modified": "2024-06-24T10:03:30Z",
+      "resolved": "github:NixOS/nixpkgs/efb39c6052f3ce51587cf19733f5f4e5d515aa13#sqlite",
       "source": "devbox-search",
       "version": "3.45.3",
       "systems": {
@@ -216,12 +216,12 @@
               "default": true
             },
             {
-              "name": "out",
-              "path": "/nix/store/0fz0dz6k0vzsn0ymqxp55wp1mzp2sd7i-sqlite-3.45.3"
-            },
-            {
               "name": "dev",
               "path": "/nix/store/8mfh0lq3vkv7a3cvz23amfwzmly3xzwi-sqlite-3.45.3-dev"
+            },
+            {
+              "name": "out",
+              "path": "/nix/store/0fz0dz6k0vzsn0ymqxp55wp1mzp2sd7i-sqlite-3.45.3"
             }
           ],
           "store_path": "/nix/store/73gqhvnvb5z608v7mh0c0ml3wy6vbxsd-sqlite-3.45.3-bin"
@@ -234,16 +234,16 @@
               "default": true
             },
             {
-              "name": "debug",
-              "path": "/nix/store/jfkw9f1n3vd442r7ckbl2zsi9w2wqfpc-sqlite-3.45.3-debug"
-            },
-            {
               "name": "dev",
               "path": "/nix/store/6pyypmi8jqyln1qw7km9dmbj8nxcsjbi-sqlite-3.45.3-dev"
             },
             {
               "name": "out",
               "path": "/nix/store/q2qjrcwfr07slc0aqw4wjs4x08ik4g52-sqlite-3.45.3"
+            },
+            {
+              "name": "debug",
+              "path": "/nix/store/jfkw9f1n3vd442r7ckbl2zsi9w2wqfpc-sqlite-3.45.3-debug"
             }
           ],
           "store_path": "/nix/store/p660mzyik5lvgaa0cdyscc755ypyd79q-sqlite-3.45.3-bin"
