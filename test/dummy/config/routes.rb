@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   resources :organizations
-  root "main#index"
+  root "oauth#new"
+
+  get "/oauth/keycloak", to: "oauth#new", as: "oauth_login"
+  get "/oauth/:provider/callback", to: "oauth#create"
+  get "/oauth/failure", to: "oauth#failure"
+
   mount RailsKeycloakAuthorization::Engine => "/rka"
 end

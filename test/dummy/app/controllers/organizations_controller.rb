@@ -1,4 +1,5 @@
 class OrganizationsController < ApplicationController
+  include WithCurrentUser
   before_action :set_organization, only: %i[ show edit update destroy ]
 
   # GET /organizations
