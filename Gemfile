@@ -12,6 +12,8 @@ gem "omniauth-keycloak"
 
 gem "sprockets-rails"
 
+gem "jbuilder"
+
 #gem "keycloak-admin", ">= 1.1.2
 gem "keycloak-admin", path: "../keycloak-admin-ruby"
 
