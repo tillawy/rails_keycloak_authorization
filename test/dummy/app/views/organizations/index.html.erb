@@ -1,6 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Organizations</h1>
+<h2><%= current_user.email %></h2>
 
 <div id="organizations">
   <% @organizations.each do |organization| %>

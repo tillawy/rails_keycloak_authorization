@@ -34,11 +34,11 @@ module WithCurrentUser
       return nil if nil_on_failure
       raise e
     rescue JWT::JWKError => e
-      logger.info "ApplicationController current_jwt_user JWT::JWKError " + e.message
+      logger.error "ApplicationController current_jwt_user JWT::JWKError " + e.message
       return nil if nil_on_failure
       raise e
     rescue JWT::DecodeError => e
-      logger.info "ApplicationController current_jwt_user JWT::DecodeError " + e.message
+      logger.error "ApplicationController current_jwt_user JWT::DecodeError " + e.message
       return nil if nil_on_failure
       raise e
     end
@@ -49,8 +49,8 @@ module WithCurrentUser
       @cached_keys = nil if options[:invalidate] # need to reload the keys
       return @cached_keys if @cached_keys
 
-      keycloak = ENV.fetch("KEYCLOAK_AUTH_SERVER_URL", "http://login.spexops.local:8080")
-      realm = ENV.fetch("KEYCLOAK_REALM", "spexops")
+      keycloak = ENV.fetch("KEYCLOAK_SERVER_URL", "http://localhost:8080")
+      realm = ENV.fetch("KEYCLOAK_AUTH_CLIENT_REALM_NAME", "dummy")
       uri = URI("#{keycloak}/realms/#{realm}/protocol/openid-connect/certs")
       req = Net::HTTP::Get.new uri
       res = Rails.cache.fetch("jwk_loader-certs") do
@@ -60,7 +60,7 @@ module WithCurrentUser
         logger.warn res.body
         raise "JWKS #{uri} FAILED"
       end
-      @cached_keys ||= JSON.parse res.body
+      @cached_keys ||= JSON.parse(res.body)
     end
 
     decoded = JWT.decode(jwt, nil, !Rails.env.test?, {algorithms: ["RS256"], jwks: jwk_loader})
