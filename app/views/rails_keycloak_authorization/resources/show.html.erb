@@ -12,8 +12,5 @@
     </tbody>
   </table>
 <% else %>
-  <form hx-post="<%= resources_path %>">
-    <input type="text" name="route_id" value="<%= @route.defaults[:controller] %>">
-    <button type="Submit">Create</button>
-  </form>
+  <div hx-get="<%= new_resource_path(route_id: @route.name) %>" hx-trigger="load" ></div>
 <% end %>

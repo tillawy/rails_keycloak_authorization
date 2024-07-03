@@ -1,0 +1,4 @@
+<form hx-post="<%= resources_path %>">
+  <input type="text" name="route_id" hidden="hidden" value="<%= @route.defaults[:controller] %>">
+  <button type="Submit">Create</button>
+</form>

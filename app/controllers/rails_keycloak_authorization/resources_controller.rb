@@ -16,6 +16,10 @@ module RailsKeycloakAuthorization
       redirect_to resource_path(route.name)
     end
 
+    def new
+      @route = Rails.application.routes.named_routes[params[:route_id]]
+    end
+
     def show
       @route = Rails.application.routes.named_routes[params[:id]]
       @keycloak_resource = keycloak_authz_resource(@route.defaults[:controller])
