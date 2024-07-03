@@ -1,0 +1,14 @@
+<% if @keycloak_resource %>
+  <table>
+    <tbody>
+    <td>
+      <%= @keycloak_resource.name %>
+    </td>
+    </tbody>
+  </table>
+<% else %>
+  <form hx-post="<%= resources_path %>">
+    <input type="text" name="route_id" value="<%= @route.name %>">
+    <button type="Submit">Create</button>
+  </form>
+<% end %>
