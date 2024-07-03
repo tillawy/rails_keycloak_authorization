@@ -1,0 +1,9 @@
+<div></div>
+<h1>Route Details</h1>
+<%= @route.name %>
+
+<div>Keycloak Status:</div>
+
+<div hx-get="<%= authz_resource_route_path(route_id: @route.name) %>" hx-trigger="load" ></div>
+
+
