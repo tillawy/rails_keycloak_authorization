@@ -1,0 +1,58 @@
+<table>
+  <caption>Available Routes</caption>
+  <thead>
+  <tr>
+    <th scope="col" class="text-left">Verb</th>
+    <th scope="col" class="text-left">Name</th>
+    <th scope="col" class="text-left">Path</th>
+    <th scope="col" class="text-left">Controller</th>
+    <th scope="col" class="text-left">Action</th>
+    <th scope="col" class="text-left">Inspect</th>
+  </tr>
+  </thead>
+  <% @routes.each do |route| %>
+    <tbody>
+    <tr class="p-2 bg-gray-100 border border-gray-200">
+      <td class="text-left">
+        <%= route.verb %>
+      </td>
+      <td class="text-left">
+        <%= route.name %>
+      </td>
+      <td class="text-left">
+        <%= route.path.spec.to_s %>
+      </td>
+      <td class="text-left">
+        <%= route.defaults[:controller] %>
+      </td>
+      <td class="text-left">
+        <%= route.defaults[:action] %>
+      </td>
+      <td class="text-left">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
+                popovertarget="modal"
+                hx-get="<%= route_path(route.name) %>"
+                hx-trigger="click"
+                hx-target="#modal-content"
+                hx-swap="innserHtml">Inspect</button>
+      </td>
+    </tr>
+    <tbody>
+  <% end %>
+</table>
+
+<div popover id="modal" class="border border-gray-200">
+  <style>
+      :popover-open {
+          width: 600px;
+          height: 400px;
+      }
+  </style>
+  <div class="bg-gray-200 h-5/6 w-full p-4" id="modal-content" >
+    <h1>Modal Dialog</h1>
+    This is the modal content. You can put anything here, like text, or a form, or an image.
+  </div>
+  <div class="text-center pt-2">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" hx-on:click="document.getElementById('modal').hidePopover()">Close</button>
+  </div>
+</div>
