@@ -1,14 +1,19 @@
 <% if @keycloak_resource %>
-  <table>
+  <table class="table-auto">
+    <thead>
+    <tr>
+      <th>Controller</th>
+    </tr>
+    </thead>
     <tbody>
-    <td>
-      <%= @keycloak_resource.name %>
-    </td>
+    <tr>
+      <td><%= @keycloak_resource.name %></td>
+    </tr>
     </tbody>
   </table>
 <% else %>
   <form hx-post="<%= resources_path %>">
-    <input type="text" name="route_id" value="<%= @route.name %>">
+    <input type="text" name="route_id" value="<%= @route.defaults[:controller] %>">
     <button type="Submit">Create</button>
   </form>
 <% end %>
