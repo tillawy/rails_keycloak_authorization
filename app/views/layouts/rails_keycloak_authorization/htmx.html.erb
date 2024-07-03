@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rails Keycloak Authorization</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js" integrity="sha384-Xh+GLLi0SMFPwtHQjT72aPG19QvKB8grnyRbYBNIdHWc2NkCrz65jlU7YrzO6qRp" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <%= stylesheet_link_tag "rails_keycloak_authorization/application", media: "all" %>
+</head>
+<body hx-headers='{"X-CSRF-Token": "<%= form_authenticity_token %>"}'>
+  <%= yield %>
+</body>
+</html>
