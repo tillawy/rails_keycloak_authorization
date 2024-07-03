@@ -13,6 +13,7 @@ module RailsKeycloakAuthorization
       @app = app
     end
     def call(env)
+      # puts Rails.application.routes.named_routes.names
       if should_process?(env["REQUEST_URI"], env["HTTP_AUTHORIZATION"])
         if authorize!(env['REQUEST_URI'], env['REQUEST_METHOD'], env['HTTP_AUTHORIZATION'])
           @app.call(env)
@@ -29,10 +30,12 @@ module RailsKeycloakAuthorization
     end
 
     def authorize!(request_uri, request_method, http_authorization)
+      # Rails.application.routes.recognize_path(request_uri)
+
       uri = URI("#{RailsKeycloakAuthorization.keycloak_server_url}/realms/#{RailsKeycloakAuthorization.keycloak_realm}/protocol/openid-connect/token")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = Rails.env.production?
-      http.read_timeout = 3
+      http.read_timeout = 1
       request = Net::HTTP::Post.new(uri, {
           'Content-Type' => 'application/x-www-form-urlencoded',
           'Authorization' => http_authorization,
