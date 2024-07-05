@@ -1,5 +1,38 @@
 <h1>Rails Keycloak Authorization Gem</h1>
 
-<ol id="routes-list" hx-get="/rka/routes" hx-trigger="load">
+<div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700" role="tablist">
+  <ul class="flex flex-wrap -mb-px">
+    <li>
+      <button
+        id="routes-tab"
+        hx-get="<%= routes_path %>"
+        class="inline-block p-4 rounded-t-lg border-b-2 text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500"
+        hx-on::after-request="
+          document.querySelector('#resources-tab').className ='inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
+          document.querySelector('#routes-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500';
+        "
+        hx-target="#tab-content"
+        hx-swap="innerHTML"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tab-content">Rails Routes</button>
+    </li>
+    <li>
+      <button
+        id="resources-tab"
+        hx-get="<%= resources_path %>"
+        class="inline-block p-4 rounded-t-lg  border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500"
+        hx-on::after-request="
+          document.querySelector('#routes-tab').className ='inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
+          document.querySelector('#resources-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-blue-600  border-blue-600  dark:text-blue-500 dark:border-blue-500';
+        "
+        hx-target="#tab-content"
+        hx-swap="innerHTML"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-content">Keycloak Resource</button>
+    </li>
+  </ul>
+</div>
 
-</ol>
+<div id="tab-content" role="tabpanel" class="tab-content" hx-get="<%= routes_path %>" hx-trigger="load delay:100ms" hx-swap="innerHTML"></div>
