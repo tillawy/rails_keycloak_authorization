@@ -3,10 +3,13 @@ module RailsKeycloakAuthorization
     include WithKeycloakAdmin
     include WithHtmxLayout
 
-    before_action :set_route, only: [ :show ]
+    before_action :set_route, only: [:show]
 
     def index
       @routes = route_names.map {|name| Rails.application.routes.named_routes.get(name) }
+    end
+
+    def show
     end
 
     private
