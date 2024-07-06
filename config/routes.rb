@@ -3,6 +3,6 @@ RailsKeycloakAuthorization::Engine.routes.draw do
   resources :routes, only: [:index, :show]
   resources :resources, only: [:create, :show, :new, :index]
   resources :scopes, only: [:index, :show, :new, :create] do
-    post :attach, on: :collection
+    post :attach, on: :member
   end
 end

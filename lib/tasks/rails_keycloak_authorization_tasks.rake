@@ -34,6 +34,7 @@ namespace :'rails-keycloak-authorization' do
     puts "Validating, Rails::Keycloak::Authorization ...."
     keycloak_admin_configure
     realm_name = ENV["KEYCLOAK_AUTH_CLIENT_REALM_NAME"]
+
     client = KeycloakAdmin.realm(realm_name).clients.find_by_client_id(ENV["KEYCLOAK_AUTH_CLIENT_ID"])
     client.authorization_services_enabled = true
     KeycloakAdmin.realm(realm_name).clients.update(client)
@@ -59,14 +60,16 @@ namespace :'rails-keycloak-authorization' do
     resource = KeycloakAdmin.realm(realm_name).authz_resources(client.id).create!("Dummy Resource", "type", ["/asdf/*", "/tmp/"], true, "display_name", [], {"a": ["b", "c"]})
 
     resource = KeycloakAdmin.realm(realm_name).authz_resources(client.id).find_by("Dummy Resource", "", "", "", "").first
+
+
     puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).get(resource.id).scopes.count
     puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).get(resource.id).uris.count
     puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).update(resource.id,
                                                                            {
                                                                              "name": "Dummy Resource",
                                                                              "type": "type",
-                                                                             "ownerManagedAccess": true,
-                                                                             "displayName": "display_name",
+                                                                             "owner_managed_access": true,
+                                                                             "display_name": "display_name",
                                                                              "attributes": {"a":["b","c"]},
                                                                              "uris": [ "/asdf/*" , "/tmp/45" ],
                                                                              "scopes":[
@@ -75,6 +78,17 @@ namespace :'rails-keycloak-authorization' do
                                                                              "icon_uri": "https://icon.ico"
                                                                            }
                                                                            )
+    debugger
+
+    puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).update(resource.id,
+                                                                           {
+                                                                             "name": "Dummy Resource",
+                                                                             "scopes":[
+                                                                               {name: scope_1.name}
+                                                                             ]
+                                                                           }
+    )
+    debugger
 
     policy = KeycloakAdmin.realm(realm_name).authz_policies(client.id, 'role').create!("Policy 1", "description", "role", "POSITIVE", "UNANIMOUS", true, [{id: realm_role.id, required: true}])
     scope_permission = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, :scope).create!("Dummy Scope Permission", "scope description", "UNANIMOUS", "POSITIVE", [resource.id], [policy.id], [scope_1.id, scope_2.id], "")
