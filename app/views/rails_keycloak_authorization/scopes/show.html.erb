@@ -1,0 +1,10 @@
+<div id="scope">
+  <% if @resource_scope %>
+    Resource Attached Scope: <%= @resource_scope.name %>
+  <% elsif @available_scope %>
+    Available Scope to attach: <%= @available_scope.name %>
+  <% else %>
+    No scope created yet,
+    <div hx-get="<%= new_scope_path(keycloak_scope_name: @keycloak_scope_name, keycloak_resource_id: @keycloak_resource_id) %>" hx-trigger="load"></div>
+  <% end %>
+</div>

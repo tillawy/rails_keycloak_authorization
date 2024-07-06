@@ -1,20 +1,28 @@
 <% if @keycloak_resource %>
   <table class="table-auto">
     <thead>
+    <tr><th>Controller</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><%= @keycloak_resource.name %></td></tr>
+    </tbody>
+  </table>
+
+  <table class="table-auto">
+    <thead>
     <tr>
-      <th>Controller</th>
       <th>Scope</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td><%= @keycloak_resource.name %></td>
       <td>
-        <div hx-get="<%= scopes_path(keycloak_resource_id: @keycloak_resource.id) %>" hx-trigger="load" ></div>
+        <div hx-get="<%= scope_path("scope:#{@route.defaults[:action]}", keycloak_resource_id: @keycloak_resource.id, keycloak_scope_name: @route.defaults[:action]) %>" hx-trigger="load" ></div>
       </td>
     </tr>
     </tbody>
   </table>
+
 <% else %>
   <div hx-get="<%= new_resource_path(route_id: @route.name) %>" hx-trigger="load" ></div>
 <% end %>

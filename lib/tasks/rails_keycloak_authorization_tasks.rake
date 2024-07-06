@@ -37,8 +37,6 @@ namespace :'rails-keycloak-authorization' do
     client = KeycloakAdmin.realm(realm_name).clients.find_by_client_id(ENV["KEYCLOAK_AUTH_CLIENT_ID"])
     client.authorization_services_enabled = true
     KeycloakAdmin.realm(realm_name).clients.update(client)
-    # KeycloakAdmin.realm(realm_name).users.list.each{|user| puts user.username}
-    # KeycloakAdmin.realm(realm_name).clients.list.each{|client| puts client.client_id}
     KeycloakAdmin.realm(realm_name).authz_scopes(client.id).list.each{|scope| puts scope.name }
     KeycloakAdmin.realm(realm_name).authz_resources(client.id).list.each{|scope| puts scope.uris }
     KeycloakAdmin.realm(realm_name).authz_policies(client.id, 'role').list.each{|scope| puts "Policy #{scope.name}" }
@@ -46,6 +44,8 @@ namespace :'rails-keycloak-authorization' do
 
     scope_1 = KeycloakAdmin.realm(realm_name).authz_scopes(client.id).create!("POST_1", "POST 1 scope", "http://asdas")
     scope_2 = KeycloakAdmin.realm(realm_name).authz_scopes(client.id).create!("POST_2", "POST 2 scope", "http://asdas")
+    puts KeycloakAdmin.realm(realm_name).authz_scopes(client.id).search("POST")
+    puts KeycloakAdmin.realm(realm_name).authz_scopes(client.id).get(scope_1.id)
 
     # resource = KeycloakAdmin.realm(realm_name).authz_resources(client.id).create!(
     #   "Dummy Resource",

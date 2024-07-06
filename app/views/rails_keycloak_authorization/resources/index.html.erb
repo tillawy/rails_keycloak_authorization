@@ -1,1 +1,5 @@
-Resources
+<h1>Resources</h1>
+<% @controller_names.each do |controller_name| %>
+  Rails controller: <%= controller_name %>
+  keycloak resource: <%= controller_name %>
+<% end %>
