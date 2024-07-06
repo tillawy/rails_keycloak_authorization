@@ -1,4 +1,4 @@
-<h1>Rails Keycloak Authorization Gem</h1>
+<h1 class="text-lg font-medium text-center text-gray-500">Rails Keycloak Authorization Gem</h1>
 
 <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700" role="tablist">
   <ul class="flex flex-wrap -mb-px">
@@ -9,6 +9,7 @@
         class="inline-block p-4 rounded-t-lg border-b-2 text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500"
         hx-on::after-request="
           document.querySelector('#resources-tab').className ='inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
+          document.querySelector('#policies-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
           document.querySelector('#routes-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500';
         "
         hx-target="#tab-content"
@@ -17,6 +18,25 @@
         aria-selected="true"
         aria-controls="tab-content">Rails Routes</button>
     </li>
+
+    <li>
+      <button
+        id="policies-tab"
+        hx-get="<%= policies_path %>"
+        class="inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500"
+        hx-on::after-request="
+          document.querySelector('#resources-tab').className ='inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
+          document.querySelector('#routes-tab').className ='inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
+          document.querySelector('#policies-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500';
+        "
+        hx-target="#tab-content"
+        hx-swap="innerHTML"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tab-content">Keycloak Policies</button>
+    </li>
+
+
     <li>
       <button
         id="resources-tab"
@@ -24,7 +44,8 @@
         class="inline-block p-4 rounded-t-lg  border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500"
         hx-on::after-request="
           document.querySelector('#routes-tab').className ='inline-block p-4 rounded-t-lg border-b-2 text-gray-600 border-gray-600 dark:text-gray-500 dark:border-gray-500';
-          document.querySelector('#resources-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-blue-600  border-blue-600  dark:text-blue-500 dark:border-blue-500';
+          document.querySelector('#policies-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-gray-600  border-gray-600  dark:text-gray-500 dark:border-gray-500';
+          document.querySelector('#resources-tab').className = 'inline-block p-4 rounded-t-lg border-b-2 text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500';
         "
         hx-target="#tab-content"
         hx-swap="innerHTML"
