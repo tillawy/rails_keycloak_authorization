@@ -41,6 +41,7 @@ namespace :'rails-keycloak-authorization' do
     KeycloakAdmin.realm(realm_name).authz_scopes(client.id).list.each{|scope| puts scope.name }
     KeycloakAdmin.realm(realm_name).authz_resources(client.id).list.each{|scope| puts scope.uris }
     KeycloakAdmin.realm(realm_name).authz_policies(client.id, 'role').list.each{|scope| puts "Policy #{scope.name}" }
+
     realm_role =  KeycloakAdmin.realm(realm_name).roles.get("default-roles-dummy")
 
     scope_1 = KeycloakAdmin.realm(realm_name).authz_scopes(client.id).create!("POST_1", "POST 1 scope", "http://asdas")
@@ -78,7 +79,6 @@ namespace :'rails-keycloak-authorization' do
                                                                              "icon_uri": "https://icon.ico"
                                                                            }
                                                                            )
-    debugger
 
     puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).update(resource.id,
                                                                            {
@@ -88,9 +88,10 @@ namespace :'rails-keycloak-authorization' do
                                                                              ]
                                                                            }
     )
-    debugger
 
     policy = KeycloakAdmin.realm(realm_name).authz_policies(client.id, 'role').create!("Policy 1", "description", "role", "POSITIVE", "UNANIMOUS", true, [{id: realm_role.id, required: true}])
+    puts KeycloakAdmin.realm(realm_name).authz_policies(client.id, 'role').find_by("Policy 1", "role").first.name
+    puts KeycloakAdmin.realm(realm_name).authz_policies(client.id, 'role').get(policy.id).name
     scope_permission = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, :scope).create!("Dummy Scope Permission", "scope description", "UNANIMOUS", "POSITIVE", [resource.id], [policy.id], [scope_1.id, scope_2.id], "")
     resource_permission = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, :resource).create!("Dummy Resource Permission", "resource description", "UNANIMOUS", "POSITIVE", [resource.id], [policy.id], nil, "")
     resource_permissions = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "", resource.id).list
@@ -163,7 +164,7 @@ namespace :'rails-keycloak-authorization' do
     keycloak_admin_configure
     client = KeycloakAdmin.realm(realm_name).clients.find_by_client_id(ENV["KEYCLOAK_AUTH_CLIENT_ID"])
     resource = KeycloakAdmin.realm(realm_name).authz_resources(client.id).find_by(client.id, "Organization", "", "", "").first
-    policy = KeycloakAdmin.realm(realm_name).authz_policies( client.id, 'role').find_by(client.id, "Policy 1", "role").first
+    policy = KeycloakAdmin.realm(realm_name).authz_policies( client.id, 'role').find_by("Policy 1", "role").first
     scope_permission = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, :scope).create!("Organizations Scope Permission", "scope description", "UNANIMOUS", "POSITIVE", [resource.id], [policy.id], ["POST", "GET", "PATCH", "PUT", "DELETE"], "")
   end
 

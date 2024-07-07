@@ -1,1 +1,19 @@
-Policies
+<h1 class="text-center text-gray-500">Policies</h1>
+<% if @policies.empty? %>
+  <p class="inline">Default Policy for </p>
+  <form class="inline" hx-post="<%= policies_path %>">
+    <input id="keycloak_policy_name" name="keycloak_policy_name" value="<%= @default_policy_name %>" type="text">
+    <label for="keycloak_realm_role">Role</label>
+    <select name="keycloak_realm_role_id" hx-indicator=".htmx-indicator">
+      <% @realm_roles.map do |role| %>
+        <option value="<%= role.id %>" selected=<%= role.name.include?("default") ? "selected" : "no" %>><%= role.name %></option>
+      <% end %>
+    </select>
+    <button type="submit">Create?</button>
+  </form>
+<% else %>
+    <div class="text-gray-500">Current Policy</div>
+    <% @policies.map do |policy| %>
+     <p><%= policy.name %></p>
+    <% end %>
+<% end %>
