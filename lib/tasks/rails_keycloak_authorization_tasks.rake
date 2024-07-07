@@ -60,8 +60,8 @@ namespace :'rails-keycloak-authorization' do
     # )
     resource = KeycloakAdmin.realm(realm_name).authz_resources(client.id).create!("Dummy Resource", "type", ["/asdf/*", "/tmp/"], true, "display_name", [], {"a": ["b", "c"]})
 
-    resource = KeycloakAdmin.realm(realm_name).authz_resources(client.id).find_by("Dummy Resource", "", "", "", "").first
-
+    puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).find_by("Dummy Resource", "", "", "", "").first.name
+    puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).find_by("", "type", "", "", "").first.name
 
     puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).get(resource.id).scopes.count
     puts KeycloakAdmin.realm(realm_name).authz_resources(client.id).get(resource.id).uris.count

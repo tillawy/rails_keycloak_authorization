@@ -9,6 +9,7 @@ module RailsKeycloakAuthorization
                   .authz_scopes(openid_client.id, params[:keycloak_resource_id])
                   .list
     end
+
     def show
       @keycloak_scope_name = params[:keycloak_scope_name]
       @keycloak_resource_id = params[:keycloak_resource_id]
@@ -18,6 +19,7 @@ module RailsKeycloakAuthorization
                           .authz_scopes(openid_client.id)
                           .search(params[:keycloak_scope_name])
                           .first
+
       @resource_scope = KeycloakAdmin
                  .realm(realm_name)
                  .authz_scopes(openid_client.id, params[:keycloak_resource_id])

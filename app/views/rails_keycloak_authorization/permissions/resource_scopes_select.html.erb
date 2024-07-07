@@ -1,0 +1,6 @@
+<select name="keycloak_scope_id" hx-indicator=".htmx-indicator">
+  <option value="" selected disabled>Select Scope</option>
+  <% @resource_scopes.map do |scope| %>
+    <option value="<%= scope.id %>"><%= scope.name %></option>
+  <% end %>
+</select>

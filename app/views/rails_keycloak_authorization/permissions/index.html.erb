@@ -1,0 +1,37 @@
+<% if @permissions.empty? %>
+  <div>No permissions created yet!</div>
+<% end %>
+<% @permissions.each do |permission| %>
+  <div>name:</div>
+  <div><%= permission.name %></div>
+  <div>type:</div>
+  <div><%= permission.type %></div>
+<% end %>
+
+
+<form hx-post="<%= permissions_path %>">
+  <div>
+    <select name="keycloak_policy_id" hx-indicator=".htmx-indicator">
+      <option value="" selected disabled>Select Policy</option>
+      <% @policies.map do |policy| %>
+        <option value="<%= policy.id %>"><%= policy.name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div>
+    <select name="keycloak_resource_id"
+            hx-get="<%= resource_scopes_select_permissions_path %>"
+            hx-target="#scopes"
+            hx-indicator=".htmx-indicator">
+      <option value="" selected disabled>Select Resource</option>
+      <% @resources.map do |resource| %>
+        <option value="<%= resource.id %>"><%= resource.name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div id="scopes"></div>
+  <button type="submit">Create?</button>
+
+</form>
