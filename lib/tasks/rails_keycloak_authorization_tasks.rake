@@ -100,6 +100,15 @@ namespace :'rails-keycloak-authorization' do
     puts resource_scopes.length
     KeycloakAdmin.realm(realm_name).authz_permissions(client.id, 'scope').list.map{|r| puts r.name}
     KeycloakAdmin.realm(realm_name).authz_permissions(client.id, 'resource').list.map{|r| puts r.name}
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "resource").find_by(resource_permission.name, nil).first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "resource").find_by(resource_permission.name, resource.id).first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "scope").find_by(scope_permission.name, resource.id).first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "scope").find_by(scope_permission.name, resource.id, "POST_1").first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "resource").find_by(nil, resource.id).first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "scope").find_by(nil, resource.id).first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "scope").find_by(nil, resource.id, "POST_1").first.name
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "scope").find_by(scope_permission.name, nil).first.name
+    # KeycloakAdmin.realm(realm_name).authz_permissions(client.id).find_by(resource_permission.name, resource.id, "scope", nil )
 
     KeycloakAdmin.realm(realm_name).authz_permissions(client.id, 'scope').delete(scope_permission.id)
     KeycloakAdmin.realm(realm_name).authz_permissions(client.id, 'resource').delete(resource_permission.id)
