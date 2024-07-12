@@ -7,7 +7,7 @@ module RailsKeycloakAuthorization
     before_action :set_route, only: [:show]
 
     def index
-      @routes = available_route_names.map {|name| Rails.application.routes.named_routes.get(name) }
+      @routes = available_routes
     end
 
     def show

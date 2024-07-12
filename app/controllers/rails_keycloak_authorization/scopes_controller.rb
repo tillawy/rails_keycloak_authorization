@@ -35,18 +35,13 @@ module RailsKeycloakAuthorization
     def attach
       keycloak_scope_name = params[:keycloak_scope_name]
       keycloak_resource_id = params[:keycloak_resource_id]
-      KeycloakAdmin.realm(realm_name)
-                   .authz_resources(openid_client.id)
-                   .update(keycloak_resource_id, scopes: [{name: keycloak_scope_name}])
-      redirect_to scope_path("scope", keycloak_resource_id: params[:keycloak_resource_id], keycloak_scope_name: params[:keycloak_scope_name])
+
+      KeycloakAdminRubyAgent.attach_scope_to_resource(keycloak_scope_name, keycloak_resource_id)
+      redirect_to scope_path("scope", keycloak_resource_id: keycloak_resource_id, keycloak_scope_name: keycloak_scope_name)
     end
 
     def create
-      scope = KeycloakAdmin
-        .realm(realm_name)
-        .authz_scopes(openid_client.id)
-        .create!(params[:keycloak_scope_name], params[:keycloak_scope_name], "")
-
+      scope = KeycloakAdminRubyAgent.create_keycloak_scope(params[:keycloak_scope_name])
       redirect_to scope_path(scope.id, keycloak_resource_id: params[:keycloak_resource_id], keycloak_scope_name: params[:keycloak_scope_name])
     end
   end

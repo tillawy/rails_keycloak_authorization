@@ -7,16 +7,7 @@ module RailsKeycloakAuthorization
 
     private
 
-    def keycloak_authz_resource(controller_name)
-      resource_name = resource_name_for_controller(controller_name)
-      KeycloakAdmin
-        .realm(realm_name)
-        .authz_resources(openid_client.id)
-        .find_by(resource_name, "urn:#{openid_client.client_id}:resources:controllers", "", "", "")
-        .first
-    rescue
-      nil
-    end
+
 
 
 

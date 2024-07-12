@@ -96,6 +96,8 @@ namespace :'rails-keycloak-authorization' do
     resource_permission = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, :resource).create!("Dummy Resource Permission", "resource description", "UNANIMOUS", "POSITIVE", [resource.id], [policy.id], nil, "")
     resource_permissions = KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "", resource.id).list
     puts resource_permissions.length
+    puts KeycloakAdmin.realm(realm_name).authz_permissions(client.id, "resource").get(resource_permission.id)
+    debugger
     resource_scopes = KeycloakAdmin.realm(realm_name).authz_scopes(client.id, resource.id).list
     puts resource_scopes.length
     KeycloakAdmin.realm(realm_name).authz_permissions(client.id, 'scope').list.map{|r| puts r.name}
@@ -119,27 +121,14 @@ namespace :'rails-keycloak-authorization' do
     puts "Validation, Rails::Keycloak::Authorization done."
   end
 
-  def keycloak_admin_configure
-    KeycloakAdmin.configure do |config|
-      config.use_service_account = true
-      config.server_url          = ENV["KEYCLOAK_SERVER_URL"]
-      config.server_domain       = ENV["KEYCLOAK_SERVER_DOMAIN"]
-      config.client_id           = ENV["KEYCLOAK_ADMIN_CLIENT_ID"]
-      config.client_realm_name   = ENV["KEYCLOAK_ADMIN_REALM_NAME"]
-      config.client_secret       = ENV["KEYCLOAK_ADMIN_CLIENT_SECRET"]
-      config.logger              = Rails.logger
-      config.rest_client_options = { timeout: 5, verify_ssl: false }
-    end
-  end
 
-  def realm_name
-    ENV["KEYCLOAK_AUTH_CLIENT_REALM_NAME"]
-  end
+
+
 
   def create_resource(model_name)
-    resource_name = model_name.downcase.pluralize
     keycloak_admin_configure
-    client = KeycloakAdmin.realm(realm_name).clients.find_by_client_id(ENV["KEYCLOAK_AUTH_CLIENT_ID"])
+    resource_name = model_name.downcase.pluralize
+    client = KeycloakAdmin.realm(realm_name).clients.find_by_client_id(ENV.fetch("KEYCLOAK_AUTH_CLIENT_ID"))
     scopes = KeycloakAdmin.realm(realm_name).authz_scopes(client.id).list.reverse
     KeycloakAdmin.realm(realm_name)
                  .authz_resources(client.id)
