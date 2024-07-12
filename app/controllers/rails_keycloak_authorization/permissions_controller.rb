@@ -6,9 +6,7 @@ module RailsKeycloakAuthorization
 
     def index
       @permissions = KeycloakAdminRubyAgent.list_keycloak_permissions
-
       @resources = KeycloakAdminRubyAgent.list_keycloak_resources_for_controllers
-
       @policies = KeycloakAdminRubyAgent.list_keycloak_policies
     end
 
