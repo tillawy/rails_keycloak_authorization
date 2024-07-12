@@ -13,6 +13,22 @@ module RailsKeycloakAuthorization
         POLICY_NAME
       end
 
+      def list_keycloak_resources_for_controllers
+        KeycloakAdmin.realm(realm_name)
+                     .authz_resources(openid_client.id)
+                     .find_by("",
+                              resource_type_for_controller,
+                              "",
+                              "",
+                              "")
+      end
+
+      def list_keycloak_permissions
+        KeycloakAdmin.realm(realm_name)
+                     .authz_permissions(openid_client.id, "scope")
+                     .find_by(nil, nil)
+      end
+
       def list_keycloak_policies
         KeycloakAdmin.realm(realm_name)
                      .authz_policies(openid_client.id, 'role')
@@ -61,7 +77,7 @@ module RailsKeycloakAuthorization
           .authz_resources(openid_client.id)
           .create!(
             resource_name,
-            type_for(openid_client.client_id),
+            resource_type_for_controller,
             [],
             true,
             "RKA #{resource_name}",
@@ -74,7 +90,7 @@ module RailsKeycloakAuthorization
           .realm(realm_name)
           .authz_resources(openid_client.id)
           .find_by(resource_name,
-                   type_for(openid_client.client_id),
+                   resource_type_for_controller,
                    "",
                    "",
                    "")
@@ -92,6 +108,10 @@ module RailsKeycloakAuthorization
           .realm(realm_name)
           .clients
           .find_by_client_id(ENV.fetch("KEYCLOAK_AUTH_CLIENT_ID"))
+      end
+
+      def resource_type_for_controller
+        type_for(openid_client.client_id)
       end
 
       def type_for(openid_client_id)

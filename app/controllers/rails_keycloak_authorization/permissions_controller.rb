@@ -5,19 +5,11 @@ module RailsKeycloakAuthorization
     include ResourcesHelper
 
     def index
-      @permissions = KeycloakAdmin.realm(realm_name)
-                        .authz_permissions(openid_client.id, "scope")
-                        .find_by(nil, nil)
+      @permissions = KeycloakAdminRubyAgent.list_keycloak_permissions
 
-      @resources = KeycloakAdmin.realm(realm_name)
-                                  .authz_resources(openid_client.id)
-                                  .find_by("", "urn:#{openid_client.client_id}:resources:controllers", "", "", "")
+      @resources = KeycloakAdminRubyAgent.list_keycloak_resources_for_controllers
 
-      @policies = KeycloakAdmin.realm(realm_name)
-                                 .authz_policies(openid_client.id, 'role')
-                                 .find_by(PoliciesController::POLICY_NAME, "role")
-
-
+      @policies = KeycloakAdminRubyAgent.list_keycloak_policies
     end
 
     def resource_scopes_select
