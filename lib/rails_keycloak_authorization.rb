@@ -30,7 +30,7 @@ module RailsKeycloakAuthorization
     end
 
     def authorize!(request_uri, request_method, http_authorization)
-      # Rails.application.routes.recognize_path(request_uri)
+      route = Rails.application.routes.recognize_path(request_uri)
 
       uri = URI("#{RailsKeycloakAuthorization.keycloak_server_url}/realms/#{RailsKeycloakAuthorization.keycloak_realm}/protocol/openid-connect/token")
       http = Net::HTTP.new(uri.host, uri.port)
@@ -41,13 +41,15 @@ module RailsKeycloakAuthorization
           'Authorization' => http_authorization,
         }
       )
+      grant_type = "urn:ietf:params:oauth:grant-type:uma-ticket"
+      permission = "#{route[:controller]}_controller##{route[:action]}"
       request.body = URI.encode_www_form( {
                                             audience: "#{RailsKeycloakAuthorization.client_id}",
-                                            grant_type: "urn:ietf:params:oauth:grant-type:uma-ticket",
-                                            permission: "#{request_uri}##{request_method}",
+                                            grant_type: grant_type,
+                                            permission: permission,
                                             response_mode: "permissions",
-                                            permission_resource_format: "uri",
-                                            permission_resource_matching_uri: true
+                                            permission_resource_format: "id",
+                                            permission_resource_matching_uri: false
                                           })
       res = http.request(request)
       res.is_a?(Net::HTTPSuccess)
