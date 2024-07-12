@@ -1,9 +1,44 @@
 module RailsKeycloakAuthorization
   class KeycloakAdminRubyAgent
     class << self
+
+      POLICY_NAME = "RKA-Policy"
+
       def initialize
         super
         keycloak_admin_configure
+      end
+
+      def policy_name
+        POLICY_NAME
+      end
+
+      def list_keycloak_policies
+        KeycloakAdmin.realm(realm_name)
+                     .authz_policies(openid_client.id, 'role')
+                     .find_by(POLICY_NAME, "role")
+      end
+
+      def create_keycloak_policy(keycloak_realm_role_id)
+        KeycloakAdmin
+          .realm(realm_name)
+          .authz_policies(openid_client.id, 'role')
+          .create!("#{POLICY_NAME}",
+                   "#{POLICY_NAME} default policy",
+                   "role",
+                   "POSITIVE",
+                   "UNANIMOUS",
+                   true,
+                   [{id: keycloak_realm_role_id, required: true}]
+          )
+      end
+
+      def list_policies
+
+      end
+
+      def list_roles
+        KeycloakAdmin.realm(realm_name).roles.list
       end
 
       def create_keycloak_scope(keycloak_scope_name)
