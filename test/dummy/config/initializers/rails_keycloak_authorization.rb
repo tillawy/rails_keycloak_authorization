@@ -5,5 +5,6 @@ RailsKeycloakAuthorization.keycloak_server_url = ENV.fetch("KEYCLOAK_SERVER_URL"
 RailsKeycloakAuthorization.keycloak_realm = ENV.fetch("KEYCLOAK_AUTH_CLIENT_REALM_NAME", "dummy")
 RailsKeycloakAuthorization.match_patterns = [
   /^\/organizations(\.json)?/,
-  /^\/api/
+  /^\/api/,
+  /internal/
 ]

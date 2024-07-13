@@ -6,5 +6,8 @@ Rails.application.routes.draw do
   get "/oauth/:provider/callback", to: "oauth#create"
   get "/oauth/failure", to: "oauth#failure"
 
+  get "/internal", to: "main#internal"
+  get "/public", to: "main#public"
+
   mount RailsKeycloakAuthorization::Engine => "/rka"
 end
