@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7.1.3.4"
-  # spec.add_dependency "keycloak-admin", ">= 1.1.2"
-  spec.add_runtime_dependency "keycloak-admin"
+  spec.add_dependency "keycloak-admin", ">= 1.1.3"
+  # spec.add_runtime_dependency "keycloak-admin"
 end

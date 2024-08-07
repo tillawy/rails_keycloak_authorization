@@ -14,8 +14,8 @@ gem "sprockets-rails"
 
 gem "jbuilder"
 
-#gem "keycloak-admin", ">= 1.1.2
-gem "keycloak-admin", path: "../keycloak-admin-ruby"
+gem "keycloak-admin", ">= 1.1.3"
+# gem "keycloak-admin", path: "../keycloak-admin-ruby"
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 gem "debug", ">= 1.0.0"
