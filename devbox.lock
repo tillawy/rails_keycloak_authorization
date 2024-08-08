@@ -2,50 +2,50 @@
   "lockfile_version": "1",
   "packages": {
     "keycloak@latest": {
-      "last_modified": "2024-06-22T18:46:48Z",
-      "resolved": "github:NixOS/nixpkgs/9693852a2070b398ee123a329e68f0dab5526681#keycloak",
+      "last_modified": "2024-07-31T08:48:38Z",
+      "resolved": "github:NixOS/nixpkgs/c3392ad349a5227f4a3464dce87bcc5046692fce#keycloak",
       "source": "devbox-search",
-      "version": "25.0.1",
+      "version": "25.0.2",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/lk7zq1zq0jqx592k6milggbvkrqxck4g-keycloak-25.0.1",
+              "path": "/nix/store/dha9rk04gifkdgkbrias4v8mr8blqh0f-keycloak-25.0.2",
               "default": true
             }
           ],
-          "store_path": "/nix/store/lk7zq1zq0jqx592k6milggbvkrqxck4g-keycloak-25.0.1"
+          "store_path": "/nix/store/dha9rk04gifkdgkbrias4v8mr8blqh0f-keycloak-25.0.2"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/dbh2spydzr4hjbqac4vr73lcm8wyx15n-keycloak-25.0.1",
+              "path": "/nix/store/sy9iwjr86g28l0v2cxbzlkl06gnp0x2q-keycloak-25.0.2",
               "default": true
             }
           ],
-          "store_path": "/nix/store/dbh2spydzr4hjbqac4vr73lcm8wyx15n-keycloak-25.0.1"
+          "store_path": "/nix/store/sy9iwjr86g28l0v2cxbzlkl06gnp0x2q-keycloak-25.0.2"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/zkqhnhd8nlalngq7s8x2fpfidn44ry3i-keycloak-25.0.1",
+              "path": "/nix/store/h1i5zkm2x5l7m1z19wpr4jh21v1x8jd8-keycloak-25.0.2",
               "default": true
             }
           ],
-          "store_path": "/nix/store/zkqhnhd8nlalngq7s8x2fpfidn44ry3i-keycloak-25.0.1"
+          "store_path": "/nix/store/h1i5zkm2x5l7m1z19wpr4jh21v1x8jd8-keycloak-25.0.2"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/qpzj3pd9g5ca6zb7fs9cxlxav8yafmf3-keycloak-25.0.1",
+              "path": "/nix/store/6mayy2pk2a9xxkja4c8srm5a3if96x3z-keycloak-25.0.2",
               "default": true
             }
           ],
-          "store_path": "/nix/store/qpzj3pd9g5ca6zb7fs9cxlxav8yafmf3-keycloak-25.0.1"
+          "store_path": "/nix/store/6mayy2pk2a9xxkja4c8srm5a3if96x3z-keycloak-25.0.2"
         }
       }
     },
