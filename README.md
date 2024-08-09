@@ -38,11 +38,36 @@ RailsKeycloakAuthorization.match_patterns = [
 ]
 ```
 
+## How to easily test it?
 
+Create development environment with Keycloak and Tofu:
+ * checkout the source-code of this project
+   * `git checkout https://github.com/tillawy/rails_keycloak_authorization.git`
+   * `cd rails_keycloak_authorization`
+ * Run keycloak in a [Docker](https://docs.docker.com/get-docker/) container
+   * `cd docker`
+   * `docker-compose up`
+   * verify keycloak is running at `http://localhost:8080`, username: `admin`, password: `admin`
+ * Run tofu to setup keycloak realm & client
+   * `brew install opentofu`  
+   * `cd ../tofu` 
+   * `tofu -chdir=tofu init`
+   * `tofu -chdir=tofu apply -auto-approve` 
 
-## Usage
-in order to use the middleware, you need to setup keycloak.
+Running the previous steps will:
+ * Start Keycloak server
+ * Create realm called: `Dummy`
+ * Create openid-client called: `dummy-client` in realm `dummy` with:
+   * client secret `dummy-client-super-secret-xxx`
+   * valid_redirect_uri `http://localhost:3000/*`
+ * Create user `test@test.com` with password `test`
+ * Create openid-client called: `keycloak-admin` in realm `master` with:
+   * client secret `keycloak-admin-client-secret-xxx`
+   * role to manager users in realm `dummy`
 
+Run the server:
+  `bundle exec rails s`
+   * http://localhost:8080/rka/
 
 
 ## Installation
@@ -55,11 +80,6 @@ gem "rails_keycloak_authorization"
 And then execute:
 ```bash
 $ bundle
-```
-
-Or install it yourself as:
-```bash
-$ gem install rails_keycloak_authorization
 ```
 
 ## Contributing
