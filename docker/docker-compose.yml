@@ -1,0 +1,14 @@
+services:
+  keycloak-authorization-server:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+      KC_HOSTNAME: "http://localhost:8080"
+      KC_HOSTNAME_ADMIN: "http://localhost:8080"
+      KC_HTTP_ENABLED: "true"
+      KC_DB: "dev-file"
+
