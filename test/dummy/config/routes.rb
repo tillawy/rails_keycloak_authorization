@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   get "/internal", to: "main#internal"
   get "/public", to: "main#public"
 
-  mount RailsKeycloakAuthorization::Engine, at: "/rka"
+  mount RailsKeycloakAuthorization::Engine, at: "/rka", constraints: LocalhostConstraint
 end
