@@ -33,6 +33,7 @@ module RailsKeycloakAuthorization
           [ params[:keycloak_scope_id] ],
           "scope"
         )
+      redirect_to permissions_path
     end
   end
 end

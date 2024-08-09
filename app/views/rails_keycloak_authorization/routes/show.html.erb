@@ -1,7 +1,6 @@
-<h1>Route Details</h1>
-<%= @route.name %>
+<h1 class="text-xl">Keycloak Authorization Status</h1>
 
-<div>Keycloak Status:</div>
+<div>Route: <%= @route.name %></div>
 
 <div hx-get="<%= resource_path(@route.name) %>" hx-trigger="load" ></div>
 

@@ -1,0 +1,90 @@
+## https://www.jetbrains.com/help/idea/oauth-2-0-authorization.html#authentication-configuration-parameters
+
+### End points
+
+GET {{keycloak_url}}/realms/{{realm}}/.well-known/openid-configuration
+Content-Type: application/json
+accept: */*
+
+
+###
+
+GET http://{{keycloak_url}}/realms/{{realm}}/.well-known/uma2-configuration
+Content-Type: application/json
+accept: */*
+
+### Get Access Token
+
+POST {{keycloak_url}}/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+accept: */*
+
+client_id = {{auth_client_id}} &
+client_secret = {{auth_client_secret}} &
+username = {{username}} &
+password = {{password}} &
+grant_type = password &
+response_type = code &
+scope = openid
+
+> {%
+    client.log("response.body:");
+    client.log(response.body.access_token);
+    client.global.set("access_token", response.body.access_token);
+    client.global.set("token_type", response.body.token_type);
+    client.global.set("refresh_token", response.body.refresh_token);
+    client.global.set("scope", response.body.scope);
+    client.global.set("expires_in", response.body.expires_in);
+    client.test("should get access_token", function(){
+        client.log(client.global.get("access_token"));
+        client.assert(response.status === 200, "Response status is not 200");
+    })
+%}
+
+###
+### Example resource URI
+
+POST {{keycloak_url}}/realms/{{realm}}/protocol/openid-connect/token
+Authorization: bearer {{$auth.token("password-auth")}}
+Content-Type: application/x-www-form-urlencoded
+accept: */*
+
+audience={{auth_client_id}} &
+grant_type=urn:ietf:params:oauth:grant-type:uma-ticket &
+permission=/organizations/1#DELETE &
+response_mode=permissions &
+permission_resource_format=uri &
+permission_resource_matching_uri=true
+
+###
+### Example resource ID
+
+POST {{keycloak_url}}/realms/{{realm}}/protocol/openid-connect/token
+Authorization: bearer {{$auth.token("password-auth")}}
+Content-Type: application/x-www-form-urlencoded
+accept: */*
+
+audience={{auth_client_id}} &
+grant_type=urn:ietf:params:oauth:grant-type:uma-ticket &
+permission=organizations_controller#show,index &
+response_mode=permissions &
+permission_resource_format=id &
+permission_resource_matching_uri=false
+
+###
+
+GET {{api_url}}/organizations.json
+Authorization: bearer {{$auth.token("password-auth")}}
+Content-Type: application/json
+Accept: */*
+
+###
+
+
+GET {{api_url}}/organizations/adf7165d-0c9a-46ca-b38c-5f67d1bd1766.json
+Authorization: bearer {{$auth.token("password-auth")}}
+Content-Type: application/json
+Accept: */*
+
+###
+

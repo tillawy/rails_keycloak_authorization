@@ -1,27 +1,33 @@
 <div id="scope">
   <% if @resource_scope %>
-    Resource Attached Scope: <%= @resource_scope.name %>
+    <div>Resource Attached Scope: <b><%= @resource_scope.name %></b></div>
+    <div>Check <b>Keycloak Policies</b> tab</div>
+
   <% elsif @available_scope %>
     Available Scope to attach: <%= @available_scope.name %>
 
-    <button hx-post="<%= attach_scope_path(@keycloak_scope_name) %>"
-            hx-target="#scope"
-            hx-vals='{
+    <button
+      class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
+      hx-post="<%= attach_scope_path(@keycloak_scope_name) %>"
+      hx-target="#scope"
+      hx-vals='{
               "keycloak_scope_name": "<%= @keycloak_scope_name %>",
               "keycloak_resource_id": "<%= @keycloak_resource_id %>"
             }'
     >
-      Attach?
+      Attach scope <%= @keycloak_scope_name %> to resource ?
     </button>
 
   <% else %>
-    No scope created yet,
-    <button hx-post="<%= scopes_path %>"
-            hx-target="#scope"
-            hx-vals='{
+    Scope <b><%= @keycloak_scope_name %></b> not created yet.
+    <button
+      class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
+      hx-post="<%= scopes_path %>"
+      hx-target="#scope"
+      hx-vals='{
               "keycloak_scope_name": "<%= @keycloak_scope_name %>",
               "keycloak_resource_id": "<%= @keycloak_resource_id %>"
             }'
-    >Create?</button>
+    >Create Scope?</button>
   <% end %>
 </div>

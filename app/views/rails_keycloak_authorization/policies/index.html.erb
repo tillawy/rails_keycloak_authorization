@@ -6,10 +6,14 @@
     <label for="keycloak_realm_role">Role</label>
     <select name="keycloak_realm_role_id" hx-indicator=".htmx-indicator">
       <% @realm_roles.map do |role| %>
-        <option value="<%= role.id %>" selected=<%= role.name.include?("default") ? "selected" : "no" %>><%= role.name %></option>
+        <option value="<%= role.id %>" <%= role.name.include?("default") ? "selected=selected" : "" %>>
+          <%= role.name %>
+        </option>
       <% end %>
     </select>
-    <button type="submit">Create?</button>
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
+      type="submit">Create</button>
   </form>
 <% else %>
     <div class="text-gray-500">Current Policy</div>

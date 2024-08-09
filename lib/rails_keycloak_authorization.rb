@@ -29,7 +29,9 @@ module RailsKeycloakAuthorization
     end
 
     def should_process?(request_uri)
-      RailsKeycloakAuthorization.match_patterns.detect { |r| r.match(request_uri) }
+      RailsKeycloakAuthorization.match_patterns.detect do |r|
+        r.match(request_uri)
+      end
     end
 
     def authorize!(request_uri, http_authorization)
@@ -68,7 +70,7 @@ module RailsKeycloakAuthorization
     def http_client(uri)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = Rails.env.production?
-      http.read_timeout = 1
+      http.read_timeout = ENV.fetch("KEYCLOAK_AUTHORIZATION_TIMEOUT", 1).to_i
       http
     end
   end

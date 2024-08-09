@@ -1,6 +1,7 @@
 <% if @permissions.empty? %>
   <div>No permissions created yet!</div>
 <% end %>
+
 <% @permissions.each do |permission| %>
   <div>name:</div>
   <div><%= permission.name %></div>
@@ -11,6 +12,7 @@
 
 <form hx-post="<%= permissions_path %>">
   <div>
+    <label for="keycloak_policy_id">Policy</label>
     <select name="keycloak_policy_id" hx-indicator=".htmx-indicator">
       <option value="" selected disabled>Select Policy</option>
       <% @policies.map do |policy| %>
@@ -20,6 +22,7 @@
   </div>
 
   <div>
+    <label for="keycloak_resource_id">Resource</label>
     <select name="keycloak_resource_id"
             hx-get="<%= resource_scopes_select_permissions_path %>"
             hx-target="#scopes"
@@ -32,6 +35,7 @@
   </div>
 
   <div id="scopes"></div>
-  <button type="submit">Create?</button>
-
+  <button
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
+    type="submit">Create</button>
 </form>

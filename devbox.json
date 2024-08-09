@@ -4,7 +4,8 @@
     "ruby@3.3.2",
     "sqlite@3.45.3",
     "opentofu@latest",
-    "keycloak@latest"
+    "keycloak@latest",
+    "jq@latest"
   ],
   "include": [],
   "env": {
