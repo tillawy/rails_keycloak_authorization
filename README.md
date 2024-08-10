@@ -1,6 +1,6 @@
 # Rails Keycloak Authorization
 
-![tests workflow](https://github.com/tillawy/rails_keycloak_authorization/actions/workflows/ruby.yml/badge.svg)
+![Github Actions CI workflow](https://github.com/tillawy/rails_keycloak_authorization/actions/workflows/ruby.yml/badge.svg)
 
 
 Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org) and gem [keycloak-admin-ruby](https://github.com/looorent/keycloak-admin-ruby).
