@@ -2,8 +2,12 @@
 
 Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org) and gem [keycloak-admin-ruby](https://github.com/looorent/keycloak-admin-ruby).
 
-This gem uses the gem [Keycloak authorization services](https://www.keycloak.org/docs/latest/authorization_services/index.html#_service_overview) under the hood.
 This gem uses JWT token to authorize requests.
+To read more how this gem works:
+
+ * [Keycloak authorization services](https://www.keycloak.org/docs/latest/authorization_services/index.html#_service_overview)
+ * [Policy Enforcement Point (PEP)](https://www.keycloak.org/docs/latest/authorization_services/index.html#_enforcer_overview)
+  
 
 For the moment it only support permission_resource_format=uri. it does not support permission_resource_format=resource.
 
