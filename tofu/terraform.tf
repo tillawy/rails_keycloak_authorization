@@ -141,12 +141,7 @@ resource "keycloak_user" "test_user_with_initial_password" {
 }
 
 
-
-#### Accounts Backend Start
-
-
-
-# create kube openid client
+# create openid client
 resource "keycloak_openid_client" "dummy-client" {
   depends_on = [
     keycloak_realm.dummy-realm

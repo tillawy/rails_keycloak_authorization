@@ -2,16 +2,14 @@
 
 Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org) and gem [keycloak-admin-ruby](https://github.com/looorent/keycloak-admin-ruby).
 
-Utilising [Keycloak authorization services](https://www.keycloak.org/docs/latest/authorization_services/index.html#_service_overview).
+This gem uses the gem [Keycloak authorization services](https://www.keycloak.org/docs/latest/authorization_services/index.html#_service_overview) under the hood.
 This gem uses JWT token to authorize requests.
-For the moment it only support permission_resource_format=uri.
-It does not support rails cookie based sessions, so it is only suitable for APIs.
 
-To use this gem for to protect JWT token & skip cookie based sessions, you may choose on of:
+For the moment it only support permission_resource_format=uri. it does not support permission_resource_format=resource.
 
-1. Skip authorization for non JWT token request using an environment variable
-2. Use regular expressions to match targeted URLs for protection, skip the rest
-3. Use regular expressions to match all if all your requests are JWT token based
+It does **not** support rails cookie-based-sessions, so it is only suitable for APIs.
+
+This gem uses regular-expression for URLs matching, so it is very powerful and flexible. 
 
 ## How it works
 
@@ -45,7 +43,7 @@ sequenceDiagram
 
 ## Configuration
 
-In order to use this gem, you need to configure it in an initializer file. You can create a new file in `config/initializers` with the following content:
+In order to use this gem, you need to configure it in an initializer file. You can create a new file in `config/initializers/rails_keycloak_authorization.rb` with the following content:
 
 ```ruby
 # The Keycloak realm 
@@ -54,7 +52,7 @@ RailsKeycloakAuthorization.keycloak_realm = ENV.fetch("KEYCLOAK_AUTH_CLIENT_REAL
 RailsKeycloakAuthorization.client_id = ENV.fetch("KEYCLOAK_AUTH_CLIENT_ID", "dummy-client")
 # Keycloak server url
 RailsKeycloakAuthorization.keycloak_server_url = ENV.fetch("KEYCLOAK_SERVER_URL", "http://localhost:8080")
-# Patterns that are protected by the middleware
+# Patterns that are protected by the middleware, Array of regular-expressions.
 RailsKeycloakAuthorization.match_patterns = [
   /^\/organizations(\.json)?/,
   /^\/api/,
@@ -129,24 +127,6 @@ And then execute:
 ```bash
 $ bundle
 ```
-
-## Keycloak Manual Setup
-
-#### Enable Client Authorization
-* Create a Realm called: `dummy`
-* Within the new Realm, create an `OpenID Connect` client
-   * id: `dummy-client`
-   * name: `Dummy`
-   * Client-Authentication: true
-   * Authorization: true
-   * Root URL: http://localhost:3000
-   * valid_redirect_uris: http://localhost:3000/*
-* Go to client  `http://localhost:8080/admin/master/console/#/dummy/clients`
-   * Under Capability config enable: Authorization
-* Go to `Authorization` tab
-* Enable `Service Accounts Enabled`
-* Add `confidential` role to the client
-* Add `confidential` role to the user `
 
 ## Contributing
 Contribution directions go here.
