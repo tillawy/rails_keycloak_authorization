@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/tillawy/rails_keycloak_authorization.git"
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 7.1.3.4"
-  spec.add_dependency "keycloak-admin", ">= 1.1.3"
-  # spec.add_runtime_dependency "keycloak-admin"
+  spec.add_runtime_dependency "rails", "~> 7.1", ">= 7.1.3.4"
+  spec.add_runtime_dependency "keycloak-admin", "~> 1.1", ">= 1.1.3"
+  spec.required_ruby_version = ">= 3.2"
 end
