@@ -1,13 +1,15 @@
 # Rails Keycloak Authorization
 
-Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org).
-Using [Keycloak authorization services](https://www.keycloak.org/docs/latest/authorization_services/index.html#_service_overview).
+Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org) and gem [keycloak-admin-ruby](https://github.com/looorent/keycloak-admin-ruby).
+
+Utilising [Keycloak authorization services](https://www.keycloak.org/docs/latest/authorization_services/index.html#_service_overview).
 This gem uses JWT token to authorize requests.
 For the moment it only support permission_resource_format=uri.
-It does not support rails sessions, so it is only suitable for APIs.
-You may choose on of:
+It does not support rails cookie based sessions, so it is only suitable for APIs.
 
-1. Skip authorization for non JWT token request
+To use this gem for to protect JWT token & skip cookie based sessions, you may choose on of:
+
+1. Skip authorization for non JWT token request using an environment variable
 2. Use regular expressions to match targeted URLs for protection, skip the rest
 3. Use regular expressions to match all if all your requests are JWT token based
 
