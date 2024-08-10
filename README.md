@@ -1,5 +1,8 @@
 # Rails Keycloak Authorization
 
+![tests workflow](https://github.com/tillawy/rails_keycloak_authorization/actions/workflows/ruby/badge.svg)
+
+
 Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org) and gem [keycloak-admin-ruby](https://github.com/looorent/keycloak-admin-ruby).
 
 This gem uses JWT token to authorize requests.
