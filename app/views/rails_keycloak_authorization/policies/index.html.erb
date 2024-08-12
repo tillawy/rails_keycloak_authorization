@@ -1,23 +1,34 @@
-<h1 class="text-center text-gray-500">Policies</h1>
-<% if @policies.empty? %>
-  <p class="inline">Default Policy for </p>
-  <form class="inline" hx-post="<%= policies_path %>">
+<div id="policies">
+  <h1 class="text-center text-gray-500">Policies</h1>
+
+  <% @policies.map do |policy| %>
+    <div class="mt-2">
+      <p>Policy Name: <%= policy.name %></p>
+      <p>Policy Roles:</p>
+      <% policy.roles.map do |role| %>
+        <% realm_role = @realm_roles.first{|rr| rr.id == rold.id } %>
+        <ul class="list-disc list-inside">
+          <li><%= realm_role.name %></li>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
+
+  <hr class="mb-6 mt-6"/>
+
+  <form class="inline" hx-post="<%= policies_path %>" hx-target="#policies">
+    <label for="keycloak_policy_name">Name</label>
     <input id="keycloak_policy_name" name="keycloak_policy_name" value="<%= @default_policy_name %>" type="text">
     <label for="keycloak_realm_role">Role</label>
     <select name="keycloak_realm_role_id" hx-indicator=".htmx-indicator">
       <% @realm_roles.map do |role| %>
         <option value="<%= role.id %>" <%= role.name.include?("default") ? "selected=selected" : "" %>>
-          <%= role.name %>
+        <%= role.name %>
         </option>
       <% end %>
     </select>
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
-      type="submit">Create</button>
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
+        type="submit">Create</button>
   </form>
-<% else %>
-    <div class="text-gray-500">Current Policy</div>
-    <% @policies.map do |policy| %>
-     <p><%= policy.name %></p>
-    <% end %>
-<% end %>
+</div>

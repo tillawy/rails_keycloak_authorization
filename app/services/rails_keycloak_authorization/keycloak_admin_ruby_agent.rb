@@ -35,11 +35,11 @@ module RailsKeycloakAuthorization
                      .find_by(POLICY_NAME, "role")
       end
 
-      def create_keycloak_policy(keycloak_realm_role_id)
+      def create_keycloak_policy(keycloak_realm_role_id, policy_name)
         KeycloakAdmin
           .realm(realm_name)
           .authz_policies(openid_client.id, 'role')
-          .create!("#{POLICY_NAME}",
+          .create!(policy_name,
                    "#{POLICY_NAME} default policy",
                    "role",
                    "POSITIVE",
