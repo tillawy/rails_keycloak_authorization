@@ -89,7 +89,6 @@ resource "keycloak_group_memberships" "management_group_memebers" {
 
 resource "keycloak_role" "management_role" {
   realm_id    = keycloak_realm.dummy-realm.id
-  client_id   = keycloak_openid_client.dummy-client.id
   name        = "management-client-role"
   description = "Management Client Role"
 }
