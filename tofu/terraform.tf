@@ -65,6 +65,63 @@ resource "keycloak_group" "groups" {
   name     = each.key
 }
 
+resource "keycloak_group" "parent_group" {
+  realm_id = keycloak_realm.dummy-realm.id
+  name     = "company-1-group"
+}
+
+resource "keycloak_group" "management_group" {
+  realm_id = keycloak_realm.dummy-realm.id
+  parent_id = keycloak_group.parent_group.id
+  name      = "management-group"
+}
+
+
+resource "keycloak_group_memberships" "management_group_memebers" {
+  realm_id = keycloak_realm.dummy-realm.id
+  group_id = keycloak_group.management_group.id
+
+  members  = [
+    keycloak_user.manager_with_initial_password.username
+  ]
+}
+
+
+resource "keycloak_role" "management_role" {
+  realm_id    = keycloak_realm.dummy-realm.id
+  client_id   = keycloak_openid_client.dummy-client.id
+  name        = "management-client-role"
+  description = "Management Client Role"
+}
+
+
+
+resource "keycloak_group_roles" "management_group_roles" {
+  realm_id    = keycloak_realm.dummy-realm.id
+  group_id = keycloak_group.management_group.id
+
+  role_ids = [
+    keycloak_role.management_role.id
+  ]
+}
+
+
+
+resource "keycloak_group" "employees_group" {
+  realm_id = keycloak_realm.dummy-realm.id
+  parent_id = keycloak_group.parent_group.id
+  name      = "employees-group"
+}
+
+resource "keycloak_group_memberships" "employees_group_memebers" {
+  realm_id = keycloak_realm.dummy-realm.id
+  group_id = keycloak_group.employees_group.id
+
+  members  = [
+    keycloak_user.employee_with_initial_password.username
+  ]
+}
+
 
 # create users
 resource "keycloak_user" "users" {
@@ -139,6 +196,61 @@ resource "keycloak_user" "test_user_with_initial_password" {
     temporary = false
   }
 }
+
+
+
+resource "keycloak_user" "manager_with_initial_password" {
+  depends_on = [
+    keycloak_realm.dummy-realm
+  ]
+  realm_id   = keycloak_realm.dummy-realm.id
+  username   = "manager@test.com"
+  enabled    = true
+
+  email      = "manager@test.com"
+  first_name = "manager"
+  last_name  = "management"
+
+  email_verified = true
+
+  attributes = {
+    foo = "bar"
+    multivalue = "value1##value2"
+  }
+
+  initial_password {
+    value     = "secret"
+    temporary = false
+  }
+}
+
+
+
+resource "keycloak_user" "employee_with_initial_password" {
+  depends_on = [
+    keycloak_realm.dummy-realm
+  ]
+  realm_id   = keycloak_realm.dummy-realm.id
+  username   = "employee@test.com"
+  enabled    = true
+
+  email      = "employee@test.com"
+  first_name = "employee"
+  last_name  = "department"
+
+  email_verified = true
+
+  attributes = {
+    foo = "bar"
+    multivalue = "value1##value2"
+  }
+
+  initial_password {
+    value     = "secret"
+    temporary = false
+  }
+}
+
 
 
 # create openid client
