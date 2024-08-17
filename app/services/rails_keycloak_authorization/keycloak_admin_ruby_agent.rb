@@ -100,14 +100,14 @@ module RailsKeycloakAuthorization
       end
 
       def realm_name
-        ENV.fetch("KEYCLOAK_AUTH_CLIENT_REALM_NAME")
+        RailsKeycloakAuthorization.keycloak_auth_client_realm_name
       end
 
       def openid_client
         KeycloakAdmin
           .realm(realm_name)
           .clients
-          .find_by_client_id(ENV.fetch("KEYCLOAK_AUTH_CLIENT_ID"))
+          .find_by_client_id(RailsKeycloakAuthorization.keycloak_auth_client_id)
       end
 
       def resource_type_for_controller
