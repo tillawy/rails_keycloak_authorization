@@ -124,13 +124,13 @@ module RailsKeycloakAuthorization
       def keycloak_admin_configure
         KeycloakAdmin.configure do |config|
           config.use_service_account = true
-          config.server_url = ENV.fetch("KEYCLOAK_SERVER_URL")
-          config.server_domain = ENV.fetch("KEYCLOAK_SERVER_DOMAIN")
-          config.client_id = ENV.fetch("KEYCLOAK_ADMIN_CLIENT_ID")
-          config.client_realm_name = ENV.fetch("KEYCLOAK_ADMIN_REALM_NAME")
-          config.client_secret = ENV.fetch("KEYCLOAK_ADMIN_CLIENT_SECRET")
-          config.logger = Rails.logger
-          config.rest_client_options = { timeout: 5, verify_ssl: Rails.env.production? }
+          config.server_url          = RailsKeycloakAuthorization.keycloak_server_url
+          config.server_domain       = RailsKeycloakAuthorization.keycloak_server_domain
+          config.client_realm_name   = RailsKeycloakAuthorization.keycloak_admin_realm_name
+          config.client_id           = RailsKeycloakAuthorization.keycloak_admin_client_id
+          config.client_secret       = RailsKeycloakAuthorization.keycloak_admin_client_secret
+          config.logger              = Rails.logger
+          config.rest_client_options = { timeout: 3, verify_ssl: Rails.env.production? }
         end
       end
     end

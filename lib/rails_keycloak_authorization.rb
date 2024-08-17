@@ -2,12 +2,14 @@ require "rails_keycloak_authorization/version"
 require "rails_keycloak_authorization/engine"
 
 module RailsKeycloakAuthorization
-  mattr_accessor :keycloak_realm
   mattr_accessor :keycloak_server_url
-  mattr_accessor :keycloak_admin_username
-  mattr_accessor :keycloak_admin_password
+  mattr_accessor :keycloak_server_domain
+  mattr_accessor :keycloak_admin_realm_name
+  mattr_accessor :keycloak_admin_client_id
+  mattr_accessor :keycloak_admin_client_secret
+  mattr_accessor :keycloak_auth_client_id
+  mattr_accessor :keycloak_auth_client_realm_name
   mattr_accessor :match_patterns
-  mattr_accessor :client_id
 
   class Middleware
     def initialize(app)
@@ -36,7 +38,7 @@ module RailsKeycloakAuthorization
 
     def authorize!(request_uri, http_authorization)
       route = Rails.application.routes.recognize_path(request_uri)
-      uri = uri(RailsKeycloakAuthorization.keycloak_server_url, RailsKeycloakAuthorization.keycloak_realm)
+      uri = uri(RailsKeycloakAuthorization.keycloak_server_url, RailsKeycloakAuthorization.keycloak_auth_client_realm_name)
       request = http_request(uri, http_authorization, route)
       response = http_client(uri).request(request)
       response.is_a?(Net::HTTPSuccess)
@@ -49,7 +51,7 @@ module RailsKeycloakAuthorization
       })
       permission = "#{route[:controller]}_controller##{route[:action]}"
       request.body = URI.encode_www_form({
-                                           audience: "#{RailsKeycloakAuthorization.client_id}",
+                                           audience: "#{RailsKeycloakAuthorization.keycloak_auth_client_id}",
                                            grant_type: grant_type,
                                            permission: permission,
                                            response_mode: "permissions",

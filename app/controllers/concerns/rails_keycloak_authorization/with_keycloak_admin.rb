@@ -5,28 +5,25 @@ module RailsKeycloakAuthorization
       before_action :keycloak_admin_configure
     end
 
+ 
+    def realm_name
+      RailsKeycloakAuthorization.keycloak_auth_client_realm_name
+    end
     private
 
 
-
-
-
-    def realm_name
-      ENV.fetch('KEYCLOAK_AUTH_CLIENT_REALM_NAME')
-    end
-
     def openid_client
-      KeycloakAdmin.realm(realm_name).clients.find_by_client_id(ENV["KEYCLOAK_AUTH_CLIENT_ID"])
+      KeycloakAdmin.realm(realm_name).clients.find_by_client_id(RailsKeycloakAuthorization.keycloak_auth_client_id)
     end
 
     def keycloak_admin_configure
       KeycloakAdmin.configure do |config|
         config.use_service_account = true
-        config.server_url          = ENV["KEYCLOAK_SERVER_URL"]
-        config.server_domain       = ENV["KEYCLOAK_SERVER_DOMAIN"]
-        config.client_id           = ENV["KEYCLOAK_ADMIN_CLIENT_ID"]
-        config.client_realm_name   = ENV["KEYCLOAK_ADMIN_REALM_NAME"]
-        config.client_secret       = ENV["KEYCLOAK_ADMIN_CLIENT_SECRET"]
+        config.server_url          = RailsKeycloakAuthorization.keycloak_server_url
+        config.server_domain       = RailsKeycloakAuthorization.keycloak_server_domain
+        config.client_realm_name   = RailsKeycloakAuthorization.keycloak_admin_realm_name
+        config.client_id           = RailsKeycloakAuthorization.keycloak_admin_client_id
+        config.client_secret       = RailsKeycloakAuthorization.keycloak_admin_client_secret
         config.logger              = Rails.logger
         config.rest_client_options = { timeout: 3, verify_ssl: Rails.env.production? }
       end
