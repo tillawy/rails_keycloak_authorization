@@ -2,6 +2,7 @@
 
 ![Github Actions CI workflow](https://github.com/tillawy/rails_keycloak_authorization/actions/workflows/ruby.yml/badge.svg)
 
+You can find more in this [blog](https://dev.to/tillawy/rails-and-keycloak-authentication-authorization-part-three-n4g).
 
 Rails middleware to authorize requests using [Keycloak](https://www.keycloak.org) and gem [keycloak-admin-ruby](https://github.com/looorent/keycloak-admin-ruby).
 
