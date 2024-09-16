@@ -9,7 +9,7 @@ module RailsKeycloakAuthorization
   mattr_accessor :keycloak_admin_client_secret
   mattr_accessor :keycloak_auth_client_id
   mattr_accessor :keycloak_auth_client_realm_name
-  mattr_accessor :match_patterns
+  mattr_accessor :match_patterns, default: []
 
   class Middleware
     def initialize(app)
