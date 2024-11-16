@@ -1,5 +1,8 @@
 require "rails_keycloak_authorization/version"
 require "rails_keycloak_authorization/engine"
+require 'keycloak-admin'
+require "importmap-rails"
+
 
 module RailsKeycloakAuthorization
   mattr_accessor :keycloak_server_url
@@ -10,6 +13,8 @@ module RailsKeycloakAuthorization
   mattr_accessor :keycloak_auth_client_id
   mattr_accessor :keycloak_auth_client_realm_name
   mattr_accessor :match_patterns, default: []
+  mattr_accessor :importmap, default: Importmap::Map.new
+
 
   class Middleware
     def initialize(app)

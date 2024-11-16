@@ -19,3 +19,4 @@ devbox.d
 .env
 *.swp
 rails_keycloak_authorization-0.0.1.gem
+.vscode

@@ -19,3 +19,5 @@ gem "keycloak-admin", ">= 1.1.3"
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 gem "debug", ">= 1.0.0"
+
+gem "importmap-rails", "~> 2.0"
