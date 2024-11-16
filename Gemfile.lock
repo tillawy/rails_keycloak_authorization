@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_keycloak_authorization (0.0.6)
+    rails_keycloak_authorization (0.0.7)
       importmap-rails
       keycloak-admin (~> 1.1, >= 1.1.3)
       rails (~> 8)
